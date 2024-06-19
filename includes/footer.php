@@ -14,13 +14,7 @@
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
 
-<script>
-	document.getElementById('website').addEventListener('change', function(){
-		const site = document.getElementById('website');
-		const sitename = document.getElementById('site-name');
-		sitename.innerText = (site.value==="")?'site':site.value;
-	});
-</script>
+<script src='scripts/script.js'> </script>
 
 </body>
 </html>

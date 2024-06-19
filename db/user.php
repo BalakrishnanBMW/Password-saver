@@ -1,4 +1,5 @@
 <?php
+include 'db/conn.php';
 
 class user
 {
@@ -12,7 +13,7 @@ class user
 	public function insertUser($email, $password)
 	{
 		try{
-			$result = $this->getUserByMail($email);
+			$result = $this->getUserCountByMail($email);
 			if($result['num']>0) {
 				return false;
 			}
@@ -49,10 +50,25 @@ class user
 		
 	}
 
-	public function getUserByMail($email)
+	public function getUserCountByMail($email)
 	{
 		try {
 			$query = "SELECT COUNT(*) AS num FROM users WHERE email=:email";
+			$stmt = $this->db->prepare($query);
+			$stmt->bindparam(':email',$email);
+			$stmt->execute();
+			$result = $stmt->fetch();
+			return $result;
+		} catch(PDOException $ex) {
+			echo $ex->getMessage();
+			return false;
+		}
+	}
+
+	public function getUserByMail($email)
+	{
+		try {
+			$query = "SELECT * FROM users WHERE email=:email";
 			$stmt = $this->db->prepare($query);
 			$stmt->bindparam(':email',$email);
 			$stmt->execute();

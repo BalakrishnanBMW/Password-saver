@@ -6,6 +6,9 @@ require 'includes/auth_check.php';
 
 ?>
 
+<?php
+
+?>
 
 <?php
 

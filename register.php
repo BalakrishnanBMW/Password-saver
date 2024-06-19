@@ -9,7 +9,8 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 	
 	if($user->insertUser($email, $password)) {
 		$_SESSION['email'] = $email;
-		header('Location:index.php');
+		$crud->createNewTable();
+		header('Location: index.php');
 		exit();
 	} else {
 ?>
