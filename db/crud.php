@@ -27,7 +27,7 @@ class crud {
 	    	}
 	}
 
-	public function getPasswordList($result)
+	public function getPasswordList()
 	{
 		try 
 		{
@@ -35,7 +35,7 @@ class crud {
 			$query = "SELECT * FROM `$tablename`";
 			$stmt = $this->db->prepare($query);
 			$stmt->execute();
-			$result = $stmt->fetch();
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			return $result;
 		} 
 		catch(PDOException $ex) 
@@ -81,5 +81,24 @@ class crud {
 			return false;
 	    	}
 	}
+
+	public function noOfSavedPassword()
+	{	
+		try 
+		{
+			$tablename = $this->getTableName();
+			$query = "SELECT COUNT(*) AS count FROM `$tablename`";
+			$stmt = $this->db->prepare($query);
+			$stmt->execute();
+			$result = $stmt->fetch();
+			return $result;
+	    	} 
+		catch(PDOException $ex)
+		{
+			echo $ex->getMessage();
+			return false;
+	    	}	
+	}
+
 }
 ?>
