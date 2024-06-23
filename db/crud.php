@@ -45,6 +45,46 @@ class crud {
 		}
 	}
 
+	public function update($id, $website, $userIdSite, $passwordSite, $notes)
+	{
+		try{
+			$tablename = $this->getTableName();
+			$query = "UPDATE `$tablename` SET website=:website, userid=:userIdSite, password=:passwordSite, notes=:notes WHERE id=:id";
+			$stmt = $this->db->prepare($query);
+			$stmt->bindparam(':id',$id);
+			$stmt->bindparam(':website',$website);
+			$stmt->bindparam(':userIdSite',$userIdSite);
+			$stmt->bindparam(':passwordSite',$passwordSite);
+			$stmt->bindparam(':notes',$notes);
+			
+			$stmt->execute();
+			return true;
+
+		} catch(PDOException $ex) {
+			echo $ex->getMessage();
+			return false;
+		}
+	}
+
+	public function getPasswordById($id)
+	{
+		try 
+		{
+			$tablename = $this->getTableName();
+			$query = "SELECT * FROM `$tablename` WHERE id=:id";
+			$stmt = $this->db->prepare($query);
+			$stmt->bindparam(':id',$id);
+			$stmt->execute();
+			$result = $stmt->fetch(PDO::FETCH_ASSOC);
+			return $result;
+		} 
+		catch(PDOException $ex) 
+		{
+			echo $ex->getMessage();
+			return false;
+		}	
+	}
+
 	public function insert($website, $userIdSite, $passwordSite, $notes)
 	{
 		try
@@ -81,6 +121,22 @@ class crud {
 			return false;
 	    	}
 	}
+
+	public function delete($id)
+	{
+	   try{
+		$tablename = $this->getTableName();
+		$query = "DELETE FROM `$tablename` WHERE id=:id";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindparam(':id', $id);
+		$stmt->execute();
+		return true;
+	      } catch(PDOException $ex) {
+			echo $ex->getMessage();
+			return false;
+	      }
+	
+	}	
 
 	public function noOfSavedPassword()
 	{	
